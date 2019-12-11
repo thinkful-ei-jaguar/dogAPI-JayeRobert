@@ -1,8 +1,8 @@
 import $ from 'jquery';
 import './index.css';
-
+/*
 function getDogImage(num) {
-  if(!num || num > 50 || num < 1){
+  if(!num){
     num = 3;
   }
   fetch(`https://dog.ceo/api/breeds/image/random/${num}`)
@@ -19,19 +19,38 @@ function watchForm() {
     getDogImage(num);
   });
 }
+
 function displayResults(responseJson) {
-  console.log(responseJson.message[0]);
-  console.log("ok");
-  console.log(responseJson);
   let hml='';
   responseJson.message.map(element=>{
     hml+=`<img src="${element}" class="results-img"></img>`;
   });
- $('.results').html(hml);
+  $('.results').html(hml);
   $('.results').removeClass('hidden');
-  console.log("it should display");
+}
+*/
 
+function getDogImage(name) {
+  fetch(`https://dog.ceo/api/breed/${name}/images/random`)
+    .then(response => response.json())
+    .then(responseJson => 
+      displayResults(responseJson))
+    .catch(error => alert('Something went wrong. Try again later.'));
+}
 
+function watchForm() {
+  $('form').submit(event => {
+    event.preventDefault();
+    let name = $('.input-field').val();
+    getDogImage(name);
+  });
+}
+
+function displayResults(responseJson) {
+  $('.results-img').replaceWith(
+    `<img src="${responseJson.message}" class="results-img">`);
+
+  $('.results').removeClass('hidden');
 }
 
 $(function() {
