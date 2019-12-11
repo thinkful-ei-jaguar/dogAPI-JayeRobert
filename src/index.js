@@ -1,8 +1,11 @@
 import $ from 'jquery';
 import './index.css';
 
-function getDogImage() {
-  fetch('https://dog.ceo/api/breeds/image/random')
+function getDogImage(num) {
+  if(!num || num > 50 || num < 1){
+    num = 3;
+  }
+  fetch(`https://dog.ceo/api/breeds/image/random/${num}`)
     .then(response => response.json())
     .then(responseJson => console.log(responseJson));
 }
@@ -10,7 +13,8 @@ function getDogImage() {
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
-    getDogImage();
+    let num = $('.input-field').val();
+    getDogImage(num);
   });
 }
 
