@@ -7,7 +7,9 @@ function getDogImage(num) {
   }
   fetch(`https://dog.ceo/api/breeds/image/random/${num}`)
     .then(response => response.json())
-    .then(responseJson => console.log(responseJson));
+    .then(responseJson => 
+      displayResults(responseJson))
+    .catch(error => alert('Something went wrong. Try again later.'));
 }
 
 function watchForm() {
@@ -16,6 +18,20 @@ function watchForm() {
     let num = $('.input-field').val();
     getDogImage(num);
   });
+}
+function displayResults(responseJson) {
+  console.log(responseJson.message[0]);
+  console.log("ok");
+  console.log(responseJson);
+  let hml='';
+  responseJson.message.map(element=>{
+    hml+=`<img src="${element}" class="results-img"></img>`;
+  });
+ $('.results').html(hml);
+  $('.results').removeClass('hidden');
+  console.log("it should display");
+
+
 }
 
 $(function() {
